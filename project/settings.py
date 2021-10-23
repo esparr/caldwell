@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 
 import os
 from pathlib import Path
+import django_on_heroku
 
 import environ
 
@@ -111,7 +112,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
@@ -126,10 +127,15 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 # Custom user model
 
 AUTH_USER_MODEL = 'core.User'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Debug toolbar config
 
@@ -138,3 +144,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+#Heroku setup
+django_on_heroku.settings(locals())
+del DATABASES['default']['OPTIONS']['sslmode']
